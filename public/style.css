@@ -1,0 +1,100 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  position: absolute;
+  top: 20%;
+  left: -200px;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+  animation: moveCloud 10s linear infinite;
+
+}
+h1 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+form {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+input[type="text"] {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  font-size: 1rem;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #45a049;
+}
+.error {
+  color: #ff3860;
+  margin-bottom: 1rem;
+}
+.weather-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.weather-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #4a4a4a;
+}
+.temperature {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.detail-item {
+  text-align: center;
+}
+.detail-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+.detail-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}

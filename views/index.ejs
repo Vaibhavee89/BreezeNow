@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreezeNow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        form {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: #ff3860;
+            margin-bottom: 1rem;
+        }
+        .weather-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .weather-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #4a4a4a;
+        }
+        .temperature {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+        }
+        .detail-item {
+            text-align: center;
+        }
+        .detail-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .location-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .location-button:hover {
+            background-color: #2980b9;
+        }
+        .location-button i {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BreezeNow</h1>
+        <form action="/weather" method="get">
+            <input type="text" name="city" placeholder="<%= defaultCity || 'Enter city name' %>" required>
+            <button type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        
+        <button id="useLocation" class="location-button">
+            <i class="fas fa-map-marker-alt"></i> Use My Location
+        </button>
+
+        <% if (error) { %>
+            <p class="error"><%= error %></p>
+        <% } else if (weather) { %>
+            <div class="weather-card">
+                <div class="weather-icon">
+                    <% if (weather.weather[0].main === 'Clear') { %>
+                        <i class="fas fa-sun"></i>
+                    <% } else if (weather.weather[0].main === 'Clouds') { %>
+                        <i class="fas fa-cloud"></i>
+                    <% } else if (weather.weather[0].main === 'Rain') { %>
+                        <i class="fas fa-cloud-rain"></i>
+                    <% } else if (weather.weather[0].main === 'Snow') { %>
+                        <i class="fas fa-snowflake"></i>
+                    <% } else { %>
+                        <i class="fas fa-cloud-sun"></i>
+                    <% } %>
+                </div>
+                <div class="temperature">
+                    <%= Math.round(weather.main.temp) %>&deg;F
+                </div>
+                <div class="description">
+                    <%= weather.weather[0].description %>
+                </div>
+                <div><%= weather.name %>, <%= weather.sys.country %></div>
+                <div class="details">
+                    <div class="detail-item">
+                        <div class="detail-label">Humidity</div>
+                        <div class="detail-value"><%= weather.main.humidity %>%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Wind</div>
+                        <div class="detail-value"><%= Math.round(weather.wind.speed) %> mph</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Feels Like</div>
+                        <div class="detail-value"><%= Math.round(weather.main.feels_like) %>&deg;F</div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        document.getElementById('useLocation').addEventListener('click', function() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    
+                    // Send the coordinates to the server
+                    window.location.href = `/weather?lat=${latitude}&lon=${longitude}`;
+                }, function(error) {
+                    alert("Error: " + error.message);
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
