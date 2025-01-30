@@ -12,6 +12,8 @@ app.use(express.static("public"))
 //const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY || "659fe52bb3dbf87b1602a5f0dc8fd1c9"
 //const ABSTRACT_API_KEY = process.env.ABSTRACT_API_KEY || "8abf69ad0ac047a69628fedcb5beef96"
 
+const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY || ""
+const ABSTRACT_API_KEY = process.env.ABSTRACT_API_KEY || ""
 // Function to get weather data by city name
 async function getWeatherDataByCity(city, apiKey) {
   const APIUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
