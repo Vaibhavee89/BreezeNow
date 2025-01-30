@@ -9,8 +9,8 @@ app.set("view engine", "ejs")
 app.use(express.static("public"))
 
 // API Keys - Make sure to set these environment variables
-//const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY || "659fe52bb3dbf87b1602a5f0dc8fd1c9"
-//const ABSTRACT_API_KEY = process.env.ABSTRACT_API_KEY || "8abf69ad0ac047a69628fedcb5beef96"
+const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY || "659fe52bb3dbf87b1602a5f0dc8fd1c9"
+const ABSTRACT_API_KEY = process.env.ABSTRACT_API_KEY || "8abf69ad0ac047a69628fedcb5beef96"
 
 // Function to get weather data by city name
 async function getWeatherDataByCity(city, apiKey) {
